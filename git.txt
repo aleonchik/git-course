@@ -238,3 +238,97 @@ alexey@es15:~/jsrc/git-course$ git status
 	новый файл:    .gitignore
 	изменено:      git.txt
 
+        Сделаем коммит
+
+alexey@es15:~/jsrc/git-course$ git commit -m "Add .gitignore"
+[master ffc8f01] Add .gitignore
+ 2 files changed, 79 insertions(+)
+ create mode 100644 .gitignore
+
+        Посмотрим лог... Видим два коммита
+
+alexey@es15:~/jsrc/git-course$ git log
+commit ffc8f0170c2acc2bb8923c2e8053117546434613 (HEAD -> master)
+Author: aleonchik <aleonchik@gmail.com>
+Date:   Sat Nov 19 11:25:03 2022 +1000
+
+    Add .gitignore
+
+commit d41013ddfa9b9f770bf88207abb20cfa18be1990
+Author: aleonchik <aleonchik@gmail.com>
+Date:   Sat Nov 19 10:59:41 2022 +1000
+
+    First commit
+
+        Посмотрим на какой ветке мы находимся
+
+alexey@es15:~/jsrc/git-course$ git branch 
+* master
+
+        Создадим новую ветку test и посмотрим на ветки вообще, звездочка
+        указывает на какой ветке мы находимся
+
+alexey@es15:~/jsrc/git-course$ git branch test
+alexey@es15:~/jsrc/git-course$ git branch 
+* master
+  test
+
+        Теперь удалим ветку test
+
+alexey@es15:~/jsrc/git-course$ git branch -D test 
+Ветка test удалена (была ffc8f01).
+
+        Создадим ветку readme
+
+alexey@es15:~/jsrc/git-course$ git branch 
+* master
+  readme
+
+        Мы все еще находимся на ветке master. Переключимся на ветку
+        radme
+
+alexey@es15:~/jsrc/git-course$ git checkout readme 
+M	git.txt
+Переключено на ветку «readme»
+alexey@es15:~/jsrc/git-course$ git branch 
+  master
+* readme
+
+        Создадим новую ветку new и сразу переключимся на нее
+
+alexey@es15:~/jsrc/git-course$ git checkout -b new
+Переключено на новую ветку «new»
+alexey@es15:~/jsrc/git-course$ git branch 
+  master
+* new
+  readme
+
+        Переключимся на ветку readme и удалим ветку new
+
+alexey@es15:~/jsrc/git-course$ git checkout readme 
+M	git.txt
+Переключено на ветку «readme»
+alexey@es15:~/jsrc/git-course$ git branch -D new 
+Ветка new удалена (была ffc8f01).
+alexey@es15:~/jsrc/git-course$ git branch 
+  master
+* readme
+
+        Находясь в новой ветке (readme) создали файл README.md и смотрим
+        статус
+
+alexey@es15:~/jsrc/git-course$ git status 
+На ветке readme
+Изменения, которые будут включены в коммит:
+  (используйте «git restore --staged <файл>…», чтобы убрать из индекса)
+	изменено:      git.txt
+
+Изменения, которые не в индексе для коммита:
+  (используйте «git add <файл>…», чтобы добавить файл в индекс)
+  (используйте «git restore <файл>…», чтобы отменить изменения в рабочем каталоге)
+	изменено:      git.txt
+
+Неотслеживаемые файлы:
+  (используйте «git add <файл>…», чтобы добавить в то, что будет включено в коммит)
+	README.md
+
