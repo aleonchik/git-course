@@ -360,3 +360,211 @@ alexey@es15:~/jsrc/git-course$ git status
 
 нет изменений добавленных для коммита
 (используйте «git add» и/или «git commit -a»)
+
+        Находясь на ветке readme видим, что в ней есть файл README.md
+
+alexey@es15:~/jsrc/git-course$ git branch 
+  master
+* readme
+alexey@es15:~/jsrc/git-course$ ll
+итого 36K
+drwxrwxr-x 2 alexey 4,0K ноя 19 11:17 logs/
+-rw-rw-r-- 1 alexey  109 ноя 19 11:03 errors.err
+-rw-rw-r-- 1 alexey  16K ноя 19 12:09 git.txt
+-rw-rw-r-- 1 alexey 1,4K ноя 19 10:52 index.html
+-rw-rw-r-- 1 alexey   45 ноя 19 12:09 README.md
+-rw-rw-r-- 1 alexey   61 ноя 19 10:43 script.js
+
+        Переключимся на ветку master и посмотрим на листинг. Видим, что
+        файла README.md в этой ветке нет.
+
+alexey@es15:~/jsrc/git-course$ git checkout master 
+Переключено на ветку «master»
+alexey@es15:~/jsrc/git-course$ git branch 
+* master
+  readme
+alexey@es15:~/jsrc/git-course$ ll
+итого 28K
+drwxrwxr-x 2 alexey 4,0K ноя 19 11:17 logs/
+-rw-rw-r-- 1 alexey  109 ноя 19 11:03 errors.err
+-rw-rw-r-- 1 alexey  11K ноя 19 12:12 git.txt
+-rw-rw-r-- 1 alexey 1,4K ноя 19 10:52 index.html
+-rw-rw-r-- 1 alexey   61 ноя 19 10:43 script.js
+
+        Находясь на верте master мы хотим объединить код с ветки 
+        readme
+
+alexey@es15:~/jsrc/git-course$ git branch 
+* master
+  readme
+alexey@es15:~/jsrc/git-course$ git merge readme 
+Обновление ffc8f01..21763a1
+Fast-forward
+ README.md |   3 +++
+ git.txt   | 122 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 125 insertions(+)
+ create mode 100644 README.md
+
+        Удалим ветку readme - больше не нужна
+
+alexey@es15:~/jsrc/git-course$ git branch -D readme 
+Ветка readme удалена (была 21763a1).
+alexey@es15:~/jsrc/git-course$ git branch
+* master
+alexey@es15:~/jsrc/git-course$ git status 
+На ветке master
+нечего коммитить, нет изменений в рабочем каталоге
+
+        Команды без параметров выводят тукущие данные
+
+alexey@es15:~/jsrc/git-course$ git config --global user.name
+aleonchik
+alexey@es15:~/jsrc/git-course$ git config --global user.email
+aleonchik@gmail.com
+
+        Добавляем удаленный репозиторий на сервере и заливаем туда наш
+        проект. Не забываем, что мы не переименовали
+        git branch -M main
+        Наш master в main как просил GIT
+        
+
+alexey@es15:~/jsrc/git-course$ git remote add origin https://github.com/aleonchik/git-course.git
+alexey@es15:~/jsrc/git-course$ git push -u origin master
+Перечисление объектов: 16, готово.
+Подсчет объектов: 100% (16/16), готово.
+При сжатии изменений используется до 4 потоков
+Сжатие объектов: 100% (14/14), готово.
+Запись объектов: 100% (16/16), 4.52 КиБ | 578.00 КиБ/с, готово.
+Всего 16 (изменений 5), повторно использовано 0 (изменений 0), повторно использовано пакетов 0
+remote: Resolving deltas: 100% (5/5), done.
+To https://github.com/aleonchik/git-course.git
+ * [new branch]      master -> master
+Ветка «master» отслеживает внешнюю ветку «master» из «origin».
+
+        Посмотрим на удаленные репозитории для нашего проекта
+
+alexey@es15:~/jsrc/git-course$ git remote 
+origin
+alexey@es15:~/jsrc/git-course$ git remote -v
+origin	https://github.com/aleonchik/git-course.git (fetch)
+origin	https://github.com/aleonchik/git-course.git (push)
+
+        Изменили файл script.js Смотрим статус, добавляем и делаем коммит
+        и проверяем статус
+
+lexey@es15:~/jsrc/git-course$ git status 
+На ветке master
+Ваша ветка обновлена в соответствии с «origin/master».
+
+Изменения, которые не в индексе для коммита:
+  (используйте «git add <файл>…», чтобы добавить файл в индекс)
+  (используйте «git restore <файл>…», чтобы отменить изменения в рабочем каталоге)
+	изменено:      script.js
+
+нет изменений добавленных для коммита
+(используйте «git add» и/или «git commit -a»)
+alexey@es15:~/jsrc/git-course$ git add script.js 
+alexey@es15:~/jsrc/git-course$ git status 
+На ветке master
+Ваша ветка обновлена в соответствии с «origin/master».
+
+Изменения, которые будут включены в коммит:
+  (используйте «git restore --staged <файл>…», чтобы убрать из индекса)
+	изменено:      script.js
+
+alexey@es15:~/jsrc/git-course$ git commit -m "console.log"
+[master 76863a1] console.log
+ 1 file changed, 1 insertion(+)
+
+alexey@es15:~/jsrc/git-course$ git status 
+На ветке master
+Ваша ветка опережает «origin/master» на 1 коммит.
+  (используйте «git push», чтобы опубликовать ваши локальные коммиты)
+
+нечего коммитить, нет изменений в рабочем каталоге
+
+        Теперь просто заливаем изменения на git
+
+alexey@es15:~/jsrc/git-course$ git push
+Перечисление объектов: 5, готово.
+Подсчет объектов: 100% (5/5), готово.
+При сжатии изменений используется до 4 потоков
+Сжатие объектов: 100% (3/3), готово.
+Запись объектов: 100% (3/3), 329 байтов | 329.00 КиБ/с, готово.
+Всего 3 (изменений 1), повторно использовано 0 (изменений 0), повторно использовано пакетов 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/aleonchik/git-course.git
+   21763a1..76863a1  master -> master
+
+        Создадим каталог в любом другом месте и склонируем туда наш
+        репозиторий с сервера
+
+alexey@es15:~/jsrc/newgc$ git clone https://github.com/aleonchik/git-course.git
+Клонирование в «git-course»…
+remote: Enumerating objects: 19, done.
+remote: Counting objects: 100% (19/19), done.
+remote: Compressing objects: 100% (11/11), done.
+remote: Total 19 (delta 7), reused 18 (delta 6), pack-reused 0
+Получение объектов: 100% (19/19), 4.73 КиБ | 1.58 МиБ/с, готово.
+Определение изменений: 100% (7/7), готово.
+alexey@es15:~/jsrc/newgc$ ll
+итого 4,0K
+drwxrwxr-x 3 alexey 4,0K ноя 19 12:52 git-course/
+alexey@es15:~/jsrc/newgc$ ll git-course/
+итого 28K
+-rw-rw-r-- 1 alexey  16K ноя 19 12:52 git.txt
+-rw-rw-r-- 1 alexey 1,4K ноя 19 12:52 index.html
+-rw-rw-r-- 1 alexey   45 ноя 19 12:52 README.md
+-rw-rw-r-- 1 alexey   82 ноя 19 12:52 script.js
+alexey@es15:~/jsrc/newgc$ 
+
+        Представим себе, что основная разработка это дома а в каталоге
+        newgc разработка на работе. Мы изменили что то на работе и
+        запушили это на сервер.
+
+alexey@es15:~/jsrc/newgc/git-course$ git status 
+На ветке master
+Ваша ветка обновлена в соответствии с «origin/master».
+
+Изменения, которые не в индексе для коммита:
+  (используйте «git add <файл>…», чтобы добавить файл в индекс)
+  (используйте «git restore <файл>…», чтобы отменить изменения в рабочем каталоге)
+	изменено:      script.js
+
+нет изменений добавленных для коммита
+(используйте «git add» и/или «git commit -a»)
+alexey@es15:~/jsrc/newgc/git-course$ git add script.js 
+alexey@es15:~/jsrc/newgc/git-course$ git status 
+На ветке master
+Ваша ветка обновлена в соответствии с «origin/master».
+
+Изменения, которые будут включены в коммит:
+  (используйте «git restore --staged <файл>…», чтобы убрать из индекса)
+	изменено:      script.js
+
+        Делаем коммит и пушим на сервер
+
+alexey@es15:~/jsrc/newgc/git-course$ git commit -m "Sample work on another comp"
+[master 2103afe] Sample work on another comp
+ 1 file changed, 1 insertion(+)
+
+alexey@es15:~/jsrc/newgc/git-course$ git push 
+Перечисление объектов: 5, готово.
+Подсчет объектов: 100% (5/5), готово.
+
+        Придя домой мы должны обновить наш проект, скачав с сервера
+        свежие изменения
+
+alexey@es15:~/jsrc/git-course$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
+Распаковка объектов: 100% (3/3), 328 байтов | 82.00 КиБ/с, готово.
+Из https://github.com/aleonchik/git-course
+   76863a1..2103afe  master     -> origin/master
+Обновление 76863a1..2103afe
+Fast-forward
+ script.js | 1 +
+ 1 file changed, 1 insertion(+)
+
